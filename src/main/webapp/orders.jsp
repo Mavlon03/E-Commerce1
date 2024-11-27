@@ -1,72 +1,71 @@
 <%@ page import="uz.pdp.online.classes.Order" %>
-<%@ page import="uz.pdp.online.classes.Product" %>
 <%@ page import="uz.pdp.online.db.DB" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="uz.pdp.online.classes.User" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="uz.pdp.online.classes.Product" %>
+
 <%
-  User auth = (User) session.getAttribute("auth");
-  if (auth == null) {
-    response.sendRedirect("login.jsp");
-    return;
-  }
+  User user = (User) session.getAttribute("auth");
+
+  // Foydalanuvchining buyurtmalarini olish
+  List<Order> orders = DB.ORDERS.stream()
+          .filter(order -> order.getUserId().equals(user.getId()))
+          .collect(Collectors.toList());
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>My Orders</title>
+  <title>Your Orders</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <%@ include file="/includes/menu.jsp" %>
 
 <div class="container mt-5">
-  <h1>My Orders</h1>
+  <h1>Your Orders</h1>
   <%
-    boolean hasOrders = false;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    if (orders.isEmpty()) {
+  %>
+  <p>You have no orders yet.</p>
+  <%
+  } else {
   %>
   <table class="table table-bordered">
     <thead>
     <tr>
-      <th>#</th>
       <th>Product</th>
-      <th>Amount</th>
-      <th>Date</th>
+      <th>Quantity</th>
+      <th>Order Date</th>
     </tr>
     </thead>
     <tbody>
     <%
-      int count = 1;
-      for (Order order : DB.ORDERS) {
-        if (order.getUserId().equals(auth.getId())) {
-          hasOrders = true;
-          Product product = DB.PRODUCTS.stream()
-                  .filter(p -> p.getId().equals(order.getProductId()))
-                  .findFirst()
-                  .orElse(null);
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      for (Order order : orders) {
+        Product product = DB.PRODUCTS.stream()
+                .filter(p -> p.getId().equals(order.getProductId()))
+                .findFirst()
+                .orElse(null);
     %>
     <tr>
-      <td><%= count++ %></td>
-      <td><%= product != null ? product.getName() : "Unknown Product" %></td>
+      <td><%= product != null ? product.getName() : "Unknown" %></td>
       <td><%= order.getAmount() %></td>
-      <td><%= sdf.format(order.getDate()) %></td>
-    </tr>
-    <%
-        }
-      }
-
-      if (!hasOrders) {
-    %>
-    <tr>
-      <td colspan="4" class="text-center">You have no orders yet.</td>
+      <td><%= dateFormat.format(order.getDate()) %></td>
     </tr>
     <%
       }
     %>
     </tbody>
   </table>
+  <%
+    }
+  %>
 </div>
 
 <%@ include file="/includes/footer.jsp" %>
+
 </body>
 </html>

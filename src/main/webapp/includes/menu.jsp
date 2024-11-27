@@ -8,10 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
-                <a href="cart.jsp" class="btn btn-outline-secondary">
-                    Basket (<%= basket.getMap().size() %>)
-                </a>
-
+                <li class="nav-item"><a class="nav-link" href="cart.jsp">Basket</a></li>
                 <% if (auth != null) { %>
                 <li class="nav-item"><a class="nav-link" href="orders.jsp">Orders</a></li>
                 <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
