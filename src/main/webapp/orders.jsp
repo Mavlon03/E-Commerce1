@@ -22,8 +22,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<%--<%@ include file="/includes/menu.jsp" %>--%>
-
+<a href="/index.jsp" class=" type-name-link" >Back to menu</a>
 <div class="container mt-5">
   <h1>Your Orders</h1>
   <%
@@ -64,8 +63,6 @@
     }
   %>
 </div>
-
-<%--<%@ include file="/includes/footer.jsp" %>--%>
 
 </body>
 </html>
