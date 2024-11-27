@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="uz.pdp.online.classes.Product" %>
+<%@ page import="uz.pdp.online.classes.Basket" %>
 
 <%
   User user = (User) session.getAttribute("auth");
@@ -21,7 +22,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<%@ include file="/includes/menu.jsp" %>
+<%--<%@ include file="/includes/menu.jsp" %>--%>
 
 <div class="container mt-5">
   <h1>Your Orders</h1>
@@ -64,7 +65,7 @@
   %>
 </div>
 
-<%@ include file="/includes/footer.jsp" %>
+<%--<%@ include file="/includes/footer.jsp" %>--%>
 
 </body>
 </html>
