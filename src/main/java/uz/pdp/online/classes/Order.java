@@ -16,4 +16,11 @@ public class Order {
     private Integer amount;
     private Date date;
     private static Integer idGen = 1;
+
+    public Order(Integer productId, Integer userId, Integer amount, Date date) {
+        this.productId = productId;
+        this.userId = userId;
+        this.amount = amount;
+        this.date = date;
+    }
 }

@@ -79,7 +79,7 @@
     </table>
 
     <!-- Order button -->
-    <form action="order" method="post">
+    <form action="/order" method="post">
         <button class="btn btn-success mt-3">Order</button>
     </form>
 

@@ -29,20 +29,16 @@ public class OrderServlet extends HttpServlet {
         }
 
         if (basket != null && !basket.getMap().isEmpty()) {
-            // Buyurtma saqlanadi
             for (Map.Entry<Product, Integer> entry : basket.getMap().entrySet()) {
                 Product product = entry.getKey();
                 Integer amount = entry.getValue();
 
-                // Order obyektini yaratish va saqlash
-                Order order = new Order(null, product.getId(), auth.getId(), amount, new Date());
+                Order order = new Order( product.getId(), auth.getId(), amount, new Date());
                 DB.ORDERS.add(order);
             }
-            // Basketni tozalash
             basket.getMap().clear();
         }
 
-        // Order sahifasiga yo'naltirish
         resp.sendRedirect("orders.jsp");
     }
 }

@@ -8,8 +8,7 @@
 
 <%
   User user = (User) session.getAttribute("auth");
-
-  // Foydalanuvchining buyurtmalarini olish
+    Basket basket = (Basket) session.getAttribute("basket");
   List<Order> orders = DB.ORDERS.stream()
           .filter(order -> order.getUserId().equals(user.getId()))
           .collect(Collectors.toList());
