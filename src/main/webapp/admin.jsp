@@ -55,7 +55,7 @@
         <p class="card-text"><%= product.getPrice() %> UZS</p>
         <form action="/remove-product" method="post">
           <input type="hidden" name="productId" value="<%= product.getId() %>">
-          <button class="btn btn-danger">Remove</button>
+<%--          <button class="btn btn-danger">Remove</button>--%>
         </form>
       </div>
     </li>

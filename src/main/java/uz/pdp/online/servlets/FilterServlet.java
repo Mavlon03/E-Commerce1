@@ -21,13 +21,11 @@ public class FilterServlet extends HttpFilter {
         String requestURI = req.getRequestURI();
         System.out.println("Request URI: " + requestURI);
 
-        // 1. Agar ochiq sahifa bo‘lsa, davom etadi
         if (openPages.contains(requestURI)) {
             chain.doFilter(req, res);
             return;
         }
 
-        // 2. Sessiyani tekshirish
         HttpSession session = req.getSession(false); // Mavjud sessiyani oladi
         if (session == null) {
             System.out.println("Sessiya mavjud emas. Login sahifasiga yo'naltirildi.");
@@ -35,7 +33,6 @@ public class FilterServlet extends HttpFilter {
             return;
         }
 
-        // 3. Rolni tekshirish
         String role = (String) session.getAttribute("role");
         if (role == null) {
             System.out.println("Rol mavjud emas. Login sahifasiga yo'naltirildi.");
@@ -43,7 +40,6 @@ public class FilterServlet extends HttpFilter {
             return;
         }
 
-        // 4. Rolga mos ravishda davom ettirish
         if ("ADMIN".equalsIgnoreCase(role)) {
             System.out.println("Admin sahifasi davom ettirildi.");
             chain.doFilter(req, res); // Davom etadi

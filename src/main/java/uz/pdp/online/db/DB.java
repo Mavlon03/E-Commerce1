@@ -1,9 +1,6 @@
 package uz.pdp.online.db;
 
-import uz.pdp.online.classes.Category;
-import uz.pdp.online.classes.Order;
-import uz.pdp.online.classes.Product;
-import uz.pdp.online.classes.User;
+import uz.pdp.online.classes.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +27,5 @@ public interface DB {
     ));
 
     List<Order> ORDERS = new ArrayList<>();
+    List<OrderItem> ORDER_ITEMS = new ArrayList<>();
 }

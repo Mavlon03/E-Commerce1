@@ -1,9 +1,6 @@
 package uz.pdp.online.servlets;
 
-import uz.pdp.online.classes.Basket;
-import uz.pdp.online.classes.Order;
-import uz.pdp.online.classes.Product;
-import uz.pdp.online.classes.User;
+import uz.pdp.online.classes.*;
 import uz.pdp.online.db.DB;
 
 import javax.servlet.ServletException;
@@ -21,26 +18,35 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        User auth = (User) session.getAttribute("auth"); // Joriy foydalanuvchini olish
-        Basket basket = (Basket) session.getAttribute("basket"); // Foydalanuvchi savatchasi
+        User auth = (User) session.getAttribute("auth");
+        Basket basket = (Basket) session.getAttribute("basket");
 
         if (auth == null) {
-            resp.sendRedirect("login.jsp"); // Agar foydalanuvchi tizimga kirmagan bo'lsa, login sahifasiga yo'naltiriladi
+            resp.sendRedirect("login.jsp");
             return;
         }
 
-        if (basket != null && !basket.getMap().isEmpty()) { // Agar savatcha bo'sh bo'lmasa
+        Order order = new Order();
+        order.setDate(new Date());
+        order.setUserId(auth.getId());
+
+        if (basket != null && !basket.getMap().isEmpty()) {
             for (Map.Entry<Product, Integer> entry : basket.getMap().entrySet()) {
                 Product product = entry.getKey();
                 Integer amount = entry.getValue();
 
-                // Buyurtma yaratish va saqlash
-                Order order = new Order(product.getId(), auth.getId(), amount, new Date());
-                DB.ORDERS.add(order);
+                OrderItem orderItem = new OrderItem();
+                orderItem.setOrderId(order.getId());
+                orderItem.setAmount(amount);
+                orderItem.setProductId(product.getId());
+
+                DB.ORDER_ITEMS.add(orderItem);
             }
-            basket.getMap().clear(); // Savatchani tozalash
+
+            DB.ORDERS.add(order);
+            basket.getMap().clear();
         }
 
-        resp.sendRedirect("orders.jsp"); // Buyurtmalar sahifasiga yo‘naltirish
+        resp.sendRedirect("orders.jsp");
     }
 }
