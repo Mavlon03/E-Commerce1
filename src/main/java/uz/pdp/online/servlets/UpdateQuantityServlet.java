@@ -42,6 +42,6 @@ public class UpdateQuantityServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("cart.jsp");
+        resp.sendRedirect("basket.jsp");
     }
 }

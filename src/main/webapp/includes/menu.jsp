@@ -8,14 +8,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="cart.jsp">Basket</a></li>
+                <li class="nav-item"><a class="nav-link" href="../basket.jsp">Basket</a></li>
                 <% if (auth != null) { %>
                 <li class="nav-item"><a class="nav-link" href="orders.jsp">Orders</a></li>
                 <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 <% } else { %>
                 <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                 <% } %>
-                <% if (auth != null && "ADMIN".equals(auth.getRole())) { %>
+                <% if (auth != null && "Admin".equals(auth.getRole())) { %>
                 <li class="nav-item"><a class="nav-link" href="admin.jsp">Admin Page</a></li>
                 <% } %>
 

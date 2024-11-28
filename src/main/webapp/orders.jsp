@@ -5,11 +5,17 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="uz.pdp.online.classes.Product" %>
-<%@ page import="uz.pdp.online.classes.Basket" %>
 
 <%
+  // Joriy foydalanuvchini sessiyadan olish
   User user = (User) session.getAttribute("auth");
-    Basket basket = (Basket) session.getAttribute("basket");
+
+  if (user == null) {
+    response.sendRedirect("login.jsp"); // Agar foydalanuvchi tizimga kirmagan bo‘lsa, login sahifasiga yo‘naltiriladi
+    return;
+  }
+
+  // Foydalanuvchining buyurtmalarini filtrlash
   List<Order> orders = DB.ORDERS.stream()
           .filter(order -> order.getUserId().equals(user.getId()))
           .collect(Collectors.toList());
@@ -18,11 +24,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <a href="/index.jsp" class="type-name-link"> Back to menu </a>
   <title>Your Orders</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<a href="/index.jsp" class=" type-name-link" >Back to menu</a>
+
 <div class="container mt-5">
   <h1>Your Orders</h1>
   <%
